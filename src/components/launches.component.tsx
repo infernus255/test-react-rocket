@@ -124,7 +124,6 @@ const Launches: React.FC<ILaunchesProps> = ({
     if (item) {
       const itemsUpdated: Item[] = items;
       itemsUpdated[itemIndex].favourite = !item.favourite;
-      console.log(itemsUpdated);
       //modifico el item
       setItems(itemsUpdated);
       if (favourites.find((i) => i.id === id)) {
@@ -137,7 +136,6 @@ const Launches: React.FC<ILaunchesProps> = ({
         //si no incluye el favorito lo agrego
         setfavourites([...favourites, item]);
       }
-      console.log(favourites);
     }
   };
 
@@ -150,7 +148,9 @@ const Launches: React.FC<ILaunchesProps> = ({
     <Fragment>
       <Search>
         <SearchIconWrapper>
-          <SearchIcon />
+          <IconButton>
+            <SearchIcon />
+          </IconButton>
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
