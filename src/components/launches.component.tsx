@@ -19,6 +19,7 @@ import Launch from "../entities/launch.entity";
 import Item from "../entities/item.entity";
 import RocketService from "../services/rocket.service";
 import Rocket from "../entities/rocket.entity";
+import ListItems from "./listItems.component";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -80,6 +81,8 @@ const Launches: React.FC<ILaunchesProps> = ({
   const [fetched, setFetched] = React.useState(false);
   // const [items, setItems] = React.useState<Item[]>([]);
   const [idCount, setIdCount] = React.useState(1);
+  const [itemsFiltered, setItemsFilted] = React.useState<Item[]>([]);
+  const [search, setSearch] = React.useState(false);
 
   async function init() {
     const responseLaunches: Launch[] = await LaunchService.get();
@@ -118,7 +121,7 @@ const Launches: React.FC<ILaunchesProps> = ({
     if (fetched) return;
   }, [fetched]);
 
-  const handleClick = (e: any, id: number) => {
+  const handleFavouriteClick = (e: any, id: number) => {
     const itemIndex = items.findIndex((i) => i.id === id);
     const item = items[itemIndex];
     if (item) {
@@ -139,6 +142,19 @@ const Launches: React.FC<ILaunchesProps> = ({
     }
   };
 
+  const onChangeSearch = (e: any) => {
+    setItemsFilted(
+      items.filter((i) =>
+        i.mission_name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+    if (e.target.value.length === 0) {
+      setSearch(false);
+    } else {
+      setSearch(true);
+    }
+  };
+
   // function handleFavourite(value: boolean) {
   //   const data: string | undefined = value === false ? "Mui-disabled" : "";
   //   return data;
@@ -148,50 +164,22 @@ const Launches: React.FC<ILaunchesProps> = ({
     <Fragment>
       <Search>
         <SearchIconWrapper>
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
+          <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
+          onChange={onChangeSearch}
         />
       </Search>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {items.map((item) => (
-          <Fragment>
-            <ListItem alignItems="flex-start" key={item.id}>
-              <ListItemAvatar>
-                <Avatar
-                  alt={item.rocket?.rocket_name}
-                  src={item.rocket?.flickr_images[0]}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={item.mission_name}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      First orbital class rocket capable of reflight
-                    </Typography>
-                    <br />
-                    {item.launch_date_unix}
-                  </React.Fragment>
-                }
-              />
-              <IconButton onClick={(e) => handleClick(e, item.id)}>
-                <StarIcon />
-              </IconButton>
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </Fragment>
-        ))}
-      </List>
+      {search ? (
+        <ListItems
+          items={itemsFiltered}
+          handleClick={handleFavouriteClick}
+        ></ListItems>
+      ) : (
+        <ListItems items={items} handleClick={handleFavouriteClick}></ListItems>
+      )}
     </Fragment>
   );
 };
