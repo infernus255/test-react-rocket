@@ -1,18 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import {
-  List,
-  ListItem,
-  Divider,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Typography,
-  IconButton,
-  styled,
-  alpha,
-  InputBase,
-} from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
+import { styled, alpha, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import LaunchService from "../services/launch.service";
 import Launch from "../entities/launch.entity";
@@ -176,9 +163,14 @@ const Launches: React.FC<ILaunchesProps> = ({
         <ListItems
           items={itemsFiltered}
           handleClick={handleFavouriteClick}
+          itemListName={Object.keys({ itemsFiltered })[0]}
         ></ListItems>
       ) : (
-        <ListItems items={items} handleClick={handleFavouriteClick}></ListItems>
+        <ListItems
+          items={items}
+          handleClick={handleFavouriteClick}
+          itemListName={Object.keys({ items })[0]}
+        ></ListItems>
       )}
     </Fragment>
   );

@@ -22,8 +22,11 @@ const Favourites: React.FC<IFavouritesProps> = ({
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {favourites.map((item) => (
-        <Fragment>
-          <ListItem alignItems="flex-start" key={item.id}>
+        <Fragment key={`frag-${item.id}-${Object.keys({ favourites })[0]}`}>
+          <ListItem
+            alignItems="flex-start"
+            key={`${item.id}-${Object.keys({ favourites })[0]}`}
+          >
             <ListItemAvatar>
               <Avatar
                 alt={item.rocket?.rocket_name}

@@ -15,17 +15,19 @@ import Item from "../entities/item.entity";
 interface IListItemsProps {
   items: Item[];
   handleClick: (e: any, id: number) => void;
+  itemListName: string;
 }
 
 const ListItems: React.FC<IListItemsProps> = ({
   items,
   handleClick,
+  itemListName,
 }): JSX.Element => {
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {items.map((item) => (
-        <Fragment>
-          <ListItem alignItems="flex-start" key={item.id}>
+        <Fragment key={`frag-${item.id}-${itemListName}`}>
+          <ListItem alignItems="flex-start" key={`${item.id}-${itemListName}`}>
             <ListItemAvatar>
               <Avatar
                 alt={item.rocket?.rocket_name}
