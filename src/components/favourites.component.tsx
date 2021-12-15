@@ -20,7 +20,7 @@ const Favourites: React.FC<IFavouritesProps> = ({
   favourites,
 }): JSX.Element => {
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+    <List sx={{ width: "100%" }}>
       {favourites.map((item) => (
         <Fragment key={`frag-${item.id}-${Object.keys({ favourites })[0]}`}>
           <ListItem

@@ -1,9 +1,20 @@
-import Header from './components/header.component';
+import Home from "./pages/home";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 function App() {
   return (
     <div className="App">
-      <Header></Header>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Home></Home>
+      </ThemeProvider>
     </div>
   );
 }
